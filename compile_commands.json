@@ -1,0 +1,236 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/main.o",
+      "srcs/main.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/main.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/scene/entity.o",
+      "srcs/scene/entity.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/scene/entity.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/scene/entity.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/scene/transform.o",
+      "srcs/scene/transform.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/scene/transform.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/scene/transform.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/graphics/renderer.o",
+      "srcs/graphics/renderer.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/graphics/renderer.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/graphics/renderer.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/graphics/mesh.o",
+      "srcs/graphics/mesh.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/graphics/mesh.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/graphics/mesh.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/graphics/shader.o",
+      "srcs/graphics/shader.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/graphics/shader.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/graphics/shader.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/graphics/camera.o",
+      "srcs/graphics/camera.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/graphics/camera.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/graphics/camera.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/physics/rigidbody.o",
+      "srcs/physics/rigidbody.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/physics/rigidbody.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/physics/rigidbody.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/core/engine.o",
+      "srcs/core/engine.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/core/engine.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/core/engine.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/core/time.o",
+      "srcs/core/time.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/core/time.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/core/time.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/core/window.o",
+      "srcs/core/window.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/core/window.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/core/window.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/utils/io.o",
+      "srcs/utils/io.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/srcs/utils/io.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/utils/io.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/glad.o",
+      "include/glad.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/include/glad.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/glad.o"
+  }
+]

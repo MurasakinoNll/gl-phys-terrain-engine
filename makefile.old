@@ -1,0 +1,31 @@
+CC=gcc
+CFLAGS=-g -O3 -Wall -Wextra -std=c17 -Iinclude
+LDFLAGS=-lglfw -lGL -lXrandr include/glad.c -lpthread -ldl -lm
+
+SRC=srcs
+BIN=bins
+ASM=asms
+GL=$(BIN)/engine
+
+SRCS=$(wildcard $(SRC)/*.c $(SRC)/**/*.c)
+OBJS=$(SRCS:$(SRC)/%.c=$(BIN)/%.o)
+ASMS=$(SRCS:$(SRC)/%.c=$(ASM)/%.s)
+
+all: $(GL)
+
+$(GL): $(OBJS)
+	@mkdir -p $(BIN)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+
+$(BIN)/%.o: $(SRC)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+asm: $(ASMS)
+$(ASM)/%.s: $(SRC)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -S $< -o $@
+
+clean:
+	rm -rf $(BIN) $(ASM) core*
+

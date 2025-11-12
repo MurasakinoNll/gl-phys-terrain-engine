@@ -1,9 +1,9 @@
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+#include "core/window.h"
 #include <stdbool.h>
-
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
-bool window_init() {
+GLFWwindow *window_init(void) {
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -12,14 +12,17 @@ bool window_init() {
   GLFWwindow *window = glfwCreateWindow(800, 600, "garakengine", NULL, NULL);
   if (window == NULL) {
     glfwTerminate();
-    return -1;
+    return NULL;
   }
   glfwMakeContextCurrent(window);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-  return true;
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    return NULL;
+  }
+  return window;
 }
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
   glViewport(0, 0, width, height);
+  (void)window;
 }
