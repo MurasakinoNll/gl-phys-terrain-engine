@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include "core/window.h"
 #include <stdbool.h>
+#include <stdio.h>
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
 GLFWwindow *window_init(void) {
@@ -16,8 +17,10 @@ GLFWwindow *window_init(void) {
   }
   glfwMakeContextCurrent(window);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+  printf("loading glad;");
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     return NULL;
+    printf("glad load failed");
   }
   return window;
 }
