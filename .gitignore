@@ -1,2 +1,4 @@
 .cache
 bins/
+core.*
+makefile.old

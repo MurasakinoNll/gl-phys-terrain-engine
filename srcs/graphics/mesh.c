@@ -21,20 +21,25 @@ Mesh mesh_init(const float *vertices, size_t vertex_count, const unsigned int *i
   glBindVertexArray(mesh.vao);
 
   glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
-  glBufferData(GL_ARRAY_BUFFER, vertex_count*6*sizeof(float), vertices, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, vertex_count*8*sizeof(float), vertices, GL_STATIC_DRAW);
   if(indices && index_count > 0){
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_count*sizeof(unsigned int), indices, GL_STATIC_DRAW);
   }
   //vertex attrib
   glVertexAttribPointer(0, 3, GL_FLOAT,
-  GL_FALSE, 6*sizeof(float), (void*)0);
+  GL_FALSE, 8*sizeof(float), (void*)0);
   
+  //color attrib
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
-  6*sizeof(float),(void*)(3*sizeof(float)));
+  8*sizeof(float),(void*)(3*sizeof(float)));
+  
+  //tex attrub
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void *)(6*sizeof(float)));
 
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
+  glEnableVertexAttribArray(2);
   glBindVertexArray(0);
   return mesh;
 }

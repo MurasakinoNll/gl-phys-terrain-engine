@@ -11,7 +11,8 @@ typedef struct {
   size_t vertex_count;
 } Mesh;
 
-Mesh mesh_init(const float *vertices, size_t vertex_count, const unsigned int *indices, size_t index_count);
+Mesh mesh_init(const float *vertices, size_t vertex_count,
+               const unsigned int *indices, size_t index_count);
 void mesh_draw(const Mesh *mesh);
 void mesh_remove(const Mesh *mesh);
 

@@ -232,5 +232,23 @@
     "directory": "/home/haraku/harakdev/physics-engine-clang",
     "file": "/home/haraku/harakdev/physics-engine-clang/include/glad.c",
     "output": "/home/haraku/harakdev/physics-engine-clang/bins/glad.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-g",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-std=c17",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "bins/stb/stb_image.o",
+      "include/stb/stb_image.c"
+    ],
+    "directory": "/home/haraku/harakdev/physics-engine-clang",
+    "file": "/home/haraku/harakdev/physics-engine-clang/include/stb/stb_image.c",
+    "output": "/home/haraku/harakdev/physics-engine-clang/bins/stb/stb_image.o"
   }
 ]

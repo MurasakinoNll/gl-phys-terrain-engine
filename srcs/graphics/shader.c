@@ -29,6 +29,7 @@ struct Shader shader_init(const char *vshpath, const char *fshpath){
     glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
     glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
   perror("failed shader compile");
+
   }
 
   unsigned int shaderProgram;
