@@ -1,45 +1,100 @@
+#include <cglm/affine.h>
+#include <cglm/mat4.h>
+#include <cglm/types.h>
+#include <cglm/util.h>
 #include <glad/glad.h>
 #include "core/window.h"
 #include "graphics/mesh.h"
 #include "graphics/shader.h"
 #include "graphics/textures.h"
+#include "core/time.h"
 #include <stdbool.h>
+#include <cglm/cglm.h>
+#include <stdio.h>
 static Mesh cubemesh;
 static GLFWwindow *mwindow;
 struct Shader retshader;
 void processInput(GLFWwindow *window);
 bool eng_init(void) {
   mwindow = window_init();
+  
   retshader = shader_init(
       "/home/haraku/harakdev/physics-engine-clang/shaders/vsh.glsl",
       "/home/haraku/harakdev/physics-engine-clang/shaders/fsh.glsl");
-   float square_vertices[] = {
-    //  x     y      z      r    g    b    s    t
-    -0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f, // bottom-left
-     0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f, // bottom-right
-     0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f, // top-right
-    -0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f  // top-left
+float cubeVertices[] = {
+    //   X           Y           Z        R      G       B              S        T   
+    -0.5f, -0.5f,  0.5f,   1, 0, 0,       0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,   0, 1, 0,       1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,   0, 0, 1,       1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,   0, 0, 1,       1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,   1, 1, 0,       0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,   1, 0, 0,       0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,   1, 0, 1,       1.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,   0, 1, 1,       0.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,   1, 1, 1,       0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,   1, 1, 1,       0.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,   0, 0, 0,       1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,   1, 0, 1,       1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,   1, 1, 1,       1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,   1, 0, 1,       0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,   0, 1, 1,       0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,   0, 1, 1,       0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,   1, 0, 0,       1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,   1, 1, 1,       1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,   0, 1, 0,       0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,   1, 1, 0,       1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,   1, 0, 1,       1.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,   1, 0, 1,       1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,   0, 0, 1,       0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,   0, 1, 0,       0.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,   1, 1, 1,       0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,   1, 1, 0,       1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,   1, 0, 0,       1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,   1, 0, 0,       1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,   0, 1, 0,       0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,   1, 1, 1,       0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,   0, 0, 0,       1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,   1, 0, 0,       0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,   0, 1, 0,       0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,   0, 1, 0,       0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,   0, 0, 1,       1.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,   0, 0, 0,       1.0f, 1.0f,
 };
-unsigned int square_indices[] = {
-    0, 1, 2,  // first triangle (bottom-left, bottom-right, top-right)
-    2, 3, 0   // second triangle (top-right, top-left, bottom-left)
-  };
-
-   cubemesh = mesh_init(square_vertices, 4, square_indices, 6);
+   cubemesh = mesh_init(cubeVertices, 36, NULL, 0);
+  glEnable(GL_DEPTH_TEST);
 
   return true;
 }
 
 void eng_run(void) {
+
+    mat4 transform;
+  glm_mat4_identity(transform);
+  
+  glm_scale(transform, (vec3){0.5f, 0.5f, 0.5f});
+
 int catotex = texture_load("/home/haraku/harakdev/physics-engine-clang/catonew.jpg");
   while (!glfwWindowShouldClose(mwindow)) {
     processInput(mwindow);
+
     glClearColor(0.2f, 0.3f, 0.3f, 0.5f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     use_shader(&retshader);
+    
+    float s = glm_rad(90.0f);
+    float angle = 0.0f;
+    angle += s * getDeltaTime();
+    glm_rotate_z(transform, angle, transform);
+    glm_rotate_x(transform, angle, transform);
+    glm_rotate_y(transform, angle, transform);
+    GLuint loc = glGetUniformLocation(retshader.id, "transform");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, (float*)transform);
+
     glBindTexture(GL_TEXTURE_2D, catotex);
     glUniform1i(glGetUniformLocation(retshader.id, "objTex"), 0);
-     mesh_draw(&cubemesh);
+
+    mesh_draw(&cubemesh);
     glfwSwapBuffers(mwindow);
     glfwPollEvents();
   }

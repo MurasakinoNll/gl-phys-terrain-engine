@@ -4,9 +4,12 @@ layout (location = 1) in vec3 aColor; // color has attribute position 1
 layout (location = 2) in vec2 aTex;
 out vec2 texCord;
 out vec3 ourColor; // output a color to the fragment shader
+
+uniform mat4 transform;
+
 void main()
 {
-gl_Position = vec4(aPos, 1.0);
+gl_Position = transform * vec4(aPos, 1.0);
 ourColor = aColor; // set ourColor to input color from the vertex data
 texCord = aTex;
 }

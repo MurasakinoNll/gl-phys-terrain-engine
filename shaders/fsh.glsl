@@ -7,5 +7,5 @@ in vec2 texCord;
 uniform sampler2D objTex;
 void main()
 {
-FragColor = texture(objTex, texCord);
+FragColor = texture(objTex, texCord) * vec4(ourColor, 1.0f);
 }
