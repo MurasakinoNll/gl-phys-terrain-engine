@@ -1,12 +1,11 @@
 CC      := gcc
-CFLAGS  := -g -O3 -Wall -Wextra -std=c17 -Iinclude -MMD -MP
+CFLAGS  := -g -O3 -Wall -Wextra -std=c17 -Iinclude -MMD -MP -I/usr/include/freetype2
 LDFLAGS := -lglfw -lGL -lXrandr -lpthread -ldl -lm
 
 SRCDIR  := srcs
 BINDIR  := bins
 GLAD_SRC := include/glad.c
 GLAD_OBJ := $(BINDIR)/glad.o
-
 STB_SRC := include/stb/stb_image.c
 STB_OBJ := $(BINDIR)/stb/stb_image.o
 
@@ -27,7 +26,6 @@ $(BIN): $(OBJS) $(GLAD_OBJ) $(STB_OBJ)
 $(BINDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
-
 $(GLAD_OBJ): $(GLAD_SRC)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@

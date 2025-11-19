@@ -17,7 +17,6 @@ Mesh mesh_init(const float *vertices, size_t vertex_count, const unsigned int *i
   glGenBuffers(1, &mesh.vbo);
   if(indices)glGenBuffers(1, &mesh.ebo);
 
-  //binding and data
   glBindVertexArray(mesh.vao);
 
   glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
