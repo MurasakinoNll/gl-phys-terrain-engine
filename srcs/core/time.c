@@ -1,17 +1,21 @@
 #include <GLFW/glfw3.h>
-typedef struct {
-  double curr, prev, realt;
-  float delta;
-} Time;
-void time_init(Time *t) {
-  t->prev = glfwGetTime();
-  t->curr = t->prev;
-  t->delta = 0.0f;
-  t->realt = 0.0;
+static float fpc=0.0f;
+static float prev=0.0f;
+float prevF;
+  int max = 0;
+float getTime(){
+float curr = glfwGetTime();
+  fpc++;
+  if(curr - prev >= 1.0){
+    max = fpc;
+    fpc = 0;
+    prev = curr;
+  }
+  return max;
 }
-void time_update(Time *t) {
-  t->curr = glfwGetTime();
-  t->delta = (float)(t->curr - t->prev);
-  t->prev = t->curr;
-  t->realt += t->delta;
+float updateTime(){
+  float currF = glfwGetTime();
+  float delta = currF - prevF;
+  prevF = currF;
+  return delta;
 }

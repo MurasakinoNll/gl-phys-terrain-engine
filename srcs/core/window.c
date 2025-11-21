@@ -1,9 +1,9 @@
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include "core/window.h"
 #include <stdbool.h>
 #include <stdio.h>
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-
 GLFWwindow *window_init(void) {
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

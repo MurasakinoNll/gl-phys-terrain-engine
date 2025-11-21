@@ -12,22 +12,24 @@
 #include <cglm/util.h>
 #include <freetype2/ft2build.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include FT_FREETYPE_H
+
+
 static Mesh cubemesh;
 static GLFWwindow *mwindow;
 struct Shader retshader;
+
 void processInput(GLFWwindow *window);
 
-void debug_text(const char *msg, float x, float y) {
-  char textbuff[sizeof(char) * 100];
-}
-
 bool eng_init(void) {
+
   mwindow = window_init();
 
   retshader = shader_init(
       "/home/haraku/harakdev/physics-engine-clang/shaders/vsh.glsl",
       "/home/haraku/harakdev/physics-engine-clang/shaders/fsh.glsl");
+
   float cubeVertices[] = {
       //   X           Y           Z        R      G       B              S T
       -0.5f, -0.5f, 0.5f,  1,     0,     0,     0.0f,  0.0f,  0.5f,  -0.5f,
@@ -70,19 +72,25 @@ void eng_run(void) {
 
   int catotex =
       texture_load("/home/haraku/harakdev/physics-engine-clang/catonew.jpg");
+   transform_init();
+      glfwSwapInterval(0);
   while (!glfwWindowShouldClose(mwindow)) {
     processInput(mwindow);
     glClearColor(0.2f, 0.3f, 0.3f, 0.5f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     use_shader(&retshader);
-    transform_init(&retshader);
+    transform(&retshader);
     glBindTexture(GL_TEXTURE_2D, catotex);
     glUniform1i(glGetUniformLocation(retshader.id, "objTex"), 0);
 
     mesh_draw(&cubemesh);
     glfwSwapBuffers(mwindow);
     glfwPollEvents();
+    float fpc= getTime();
+    char fps[128];
+    sprintf(fps, "%f fps", fpc);
+    glfwSetWindowTitle(mwindow, fps);
   }
 }
 
