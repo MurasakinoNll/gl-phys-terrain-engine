@@ -11,6 +11,7 @@ typedef struct {
 
 Mesh mesh_init(const float *vertices, size_t vertex_count, const unsigned int *indices, size_t index_count){
   Mesh mesh;
+  mesh.ebo = 0;
   mesh.index_count = index_count;
   mesh.vertex_count = vertex_count;
   glGenVertexArrays(1,&mesh.vao);

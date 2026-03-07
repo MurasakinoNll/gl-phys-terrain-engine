@@ -1,7 +1,8 @@
 bins/core/engine.o: srcs/core/engine.c include/core/time.h \
- include/core/window.h include/graphics/mesh.h include/graphics/shader.h \
- include/graphics/textures.h include/stb/stb_image.h \
- include/scene/transform.h /usr/include/freetype2/freetype/freetype.h \
+ include/core/window.h include/graphics/camera.h include/graphics/mesh.h \
+ include/graphics/shader.h include/graphics/textures.h \
+ include/stb/stb_image.h include/scene/transform.h \
+ /usr/include/freetype2/freetype/freetype.h \
  /usr/include/freetype2/ft2build.h \
  /usr/include/freetype2/freetype/config/ftconfig.h \
  /usr/include/freetype2/freetype/config/ftoption.h \
@@ -17,6 +18,7 @@ bins/core/engine.o: srcs/core/engine.c include/core/time.h \
  /usr/include/freetype2/freetype/fterrdef.h
 include/core/time.h:
 include/core/window.h:
+include/graphics/camera.h:
 include/graphics/mesh.h:
 include/graphics/shader.h:
 include/graphics/textures.h:

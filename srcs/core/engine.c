@@ -1,9 +1,11 @@
 #include <glad/glad.h>
 #include "core/time.h"
 #include "core/window.h"
+#include "graphics/camera.h"
 #include "graphics/mesh.h"
 #include "graphics/shader.h"
 #include "graphics/textures.h"
+#include "graphics/camera.h"
 #include "scene/transform.h"
 #include <cglm/affine.h>
 #include <cglm/cglm.h>
@@ -13,12 +15,14 @@
 #include <freetype2/ft2build.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <unistd.h>
 #include FT_FREETYPE_H
 
-
 static Mesh cubemesh;
+static Mesh cubemesh2;
 static GLFWwindow *mwindow;
 struct Shader retshader;
+struct Shader retshader2;
 
 void processInput(GLFWwindow *window);
 
@@ -29,6 +33,7 @@ bool eng_init(void) {
   retshader = shader_init(
       "/home/haraku/harakdev/physics-engine-clang/shaders/vsh.glsl",
       "/home/haraku/harakdev/physics-engine-clang/shaders/fsh.glsl");
+  retshader2 = shader_init("/home/haraku/harakdev/physics-engine-clang/shaders/vsh.glsl", "/home/haraku/harakdev/physics-engine-clang/shaders/fsh.glsl");
 
   float cubeVertices[] = {
       //   X           Y           Z        R      G       B              S T
@@ -63,6 +68,7 @@ bool eng_init(void) {
       -0.5f, -0.5f, -0.5f, 0,     0,     0,     1.0f,  1.0f,
   };
   cubemesh = mesh_init(cubeVertices, 36, NULL, 0);
+  cubemesh2 = mesh_init(cubeVertices, 36, NULL, 0);
   glEnable(GL_DEPTH_TEST);
 
   return true;
@@ -72,7 +78,8 @@ void eng_run(void) {
 
   int catotex =
       texture_load("/home/haraku/harakdev/physics-engine-clang/catonew.jpg");
-   transform_init();
+    transform_init();
+    camera_init();
       glfwSwapInterval(0);
   while (!glfwWindowShouldClose(mwindow)) {
     processInput(mwindow);
@@ -80,11 +87,15 @@ void eng_run(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     use_shader(&retshader);
+    use_shader(&retshader2);
+    camera_update();
     transform(&retshader);
+    
     glBindTexture(GL_TEXTURE_2D, catotex);
     glUniform1i(glGetUniformLocation(retshader.id, "objTex"), 0);
 
     mesh_draw(&cubemesh);
+    mesh_draw(&cubemesh2);
     glfwSwapBuffers(mwindow);
     glfwPollEvents();
     float fpc= getTime();
@@ -103,6 +114,49 @@ void eng_term(void) {
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, 1);
+}
+  vec3 tempcam;
+  const float cameraSpeed = 2.5f * updateTime();
+  if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    glm_vec3_scale(Ecamera.cameraFront, cameraSpeed, tempcam);
+    glm_vec3_add(Ecamera.cameraPos, tempcam, Ecamera.cameraPos); 
+   fprintf(stdout, "pos(%.2f, %.2f, %.2f) front(%.2f, %.2f, %.2f)\n",
+    Ecamera.cameraPos[0], Ecamera.cameraPos[1], Ecamera.cameraPos[2],
+    tempcam[0], tempcam[1], tempcam[2]);
+  }
+  if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    glm_vec3_scale(Ecamera.cameraFront, cameraSpeed, tempcam);
+    glm_vec3_sub(Ecamera.cameraPos, tempcam, Ecamera.cameraPos); 
+  fprintf(stdout, "pos(%.2f, %.2f, %.2f) front(%.2f, %.2f, %.2f)\n",
+    Ecamera.cameraPos[0], Ecamera.cameraPos[1], Ecamera.cameraPos[2],
+    tempcam[0], tempcam[1], tempcam[2]);
+  }
+  if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+    glm_vec3_cross(Ecamera.cameraFront, Ecamera.up, tempcam);
+    glm_vec3_normalize(tempcam);
+    glm_vec3_scale(tempcam, cameraSpeed, tempcam);
+    glm_vec3_add(Ecamera.cameraPos, tempcam, Ecamera.cameraPos); 
+  fprintf(stdout, "pos(%.2f, %.2f, %.2f) front(%.2f, %.2f, %.2f)\n",
+    Ecamera.cameraPos[0], Ecamera.cameraPos[1], Ecamera.cameraPos[2],
+    tempcam[0], tempcam[1], tempcam[2]);
+  }
+  if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        glm_vec3_cross(Ecamera.cameraFront, Ecamera.up, tempcam);
+    glm_vec3_normalize(tempcam);
+    glm_vec3_scale(tempcam, cameraSpeed, tempcam);
+    glm_vec3_sub(Ecamera.cameraPos, tempcam, Ecamera.cameraPos); 
+fprintf(stdout, "pos(%.2f, %.2f, %.2f) front(%.2f, %.2f, %.2f)\n",
+    Ecamera.cameraPos[0], Ecamera.cameraPos[1], Ecamera.cameraPos[2],
+    tempcam[0], tempcam[1], tempcam[2]);
+  }
+  if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+    glm_vec3_scale(Ecamera.up, cameraSpeed, tempcam);
+    glm_vec3_add(Ecamera.cameraPos, tempcam, Ecamera.cameraPos);
+  }
+  
+  if(glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS){
+    glm_vec3_scale(Ecamera.up, cameraSpeed, tempcam);
+    glm_vec3_sub(Ecamera.cameraPos, tempcam, Ecamera.cameraPos);
   }
 }
 
