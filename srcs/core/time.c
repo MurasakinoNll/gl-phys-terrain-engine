@@ -1,10 +1,10 @@
 #include <GLFW/glfw3.h>
-static float fpc=0.0f;
-static float prev=0.0f;
-float prevF;
+static double fpc=0.0f;
+static double prev=0.0f;
+double prevF;
   int max = 0;
-float getTime(){
-float curr = glfwGetTime();
+double getTime(){
+double curr = glfwGetTime();
   fpc++;
   if(curr - prev >= 1.0){
     max = fpc;
@@ -13,9 +13,9 @@ float curr = glfwGetTime();
   }
   return max;
 }
-float updateTime(){
-  float currF = glfwGetTime();
-  float delta = currF - prevF;
+double updateTime(){
+  double currF = glfwGetTime();
+  double delta = currF - prevF;
   prevF = currF;
   return delta;
 }

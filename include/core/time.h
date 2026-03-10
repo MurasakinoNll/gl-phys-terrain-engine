@@ -2,6 +2,6 @@
 #define TIME_H
 
 #include <GLFW/glfw3.h>
-float getTime();
-float updateTime();
+double getTime();
+double updateTime();
 #endif
