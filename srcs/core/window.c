@@ -26,7 +26,6 @@ GLFWwindow *window_init(void) {
   }
 
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
   glfwSetCursorPosCallback(window, mouse_callback);
 
   printf("Vendor:   %s\n", glGetString(GL_VENDOR));

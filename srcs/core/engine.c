@@ -1,4 +1,5 @@
 #include <glad/glad.h>
+
 #include "core/time.h"
 #include "core/window.h"
 #include "graphics/camera.h"
@@ -89,22 +90,21 @@ bool eng_init(void) {
 }
 
 void eng_run(void) {
-
+  //
   texture_load("/home/haraku/harakdev/physics-engine-clang/catonew.jpg");
   transform_init();
   camera_init();
 
-  //VSYNC ON||OFF 
+  // VSYNC ON||OFF
   glfwSwapInterval(0);
-
   while (!glfwWindowShouldClose(mwindow)) {
     processInput(mwindow);
-     glClearColor(0.2f, 0.3f, 0.3f, 0.5f);
-     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.2f, 0.3f, 0.3f, 0.5f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // use_shader(&retshader);
+    use_shader(&retshader);
     // int modelLoc = glGetUniformLocation(retshader.id, "model");
-    // for(unsigned int i = 0; i < 20; i++){
+    // for (unsigned int i = 0; i < 20; i++) {
     //   mat4 model;
     //   glm_mat4_identity(model);
     //   glm_translate(model, cubePositions[i]);
@@ -112,20 +112,14 @@ void eng_run(void) {
     //   glm_rotate(model, glm_rad(angle), (vec3){1.0f, 0.3f, 0.5f});
     //   glUniformMatrix4fv(modelLoc, 1, GL_FALSE, (float *)model);
     //   glDrawArrays(GL_TRIANGLES, 0, 36);
-    //
     // }
-    //floor_draw(&retshader, 100, 100, -3.0f, 1.0f);
-    
-
+    floor_draw(&retshader, 100, 100, -3.0f, 1.0f);
     camera_update();
     transform(&retshader);
 
     mesh_draw(&cubemesh);
     glfwSwapBuffers(mwindow);
     glfwPollEvents();
-    char fps[128];
-      snprintf(fps, 128, "%.0f fps", getTime());
-      glfwSetWindowTitle(mwindow, fps);
   }
 }
 
