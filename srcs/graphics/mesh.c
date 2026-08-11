@@ -1,13 +1,7 @@
 #include <stddef.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-typedef struct {
-  unsigned int vao;
-  unsigned int vbo;
-  unsigned int ebo;
-  size_t index_count;
-  size_t vertex_count;
-} Mesh;
+#include "graphics/mesh.h"
 
 Mesh mesh_init(const float *vertices, size_t vertex_count, const unsigned int *indices, size_t index_count){
   Mesh mesh;
@@ -52,4 +46,6 @@ void mesh_draw(const Mesh *mesh){
 
 void mesh_remove(const Mesh *mesh){
   glDeleteBuffers(1, &mesh->vbo);
+  glDeleteBuffers(1, &mesh->ebo);
+  glDeleteVertexArrays(1, &mesh->vao);
 }

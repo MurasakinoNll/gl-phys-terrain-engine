@@ -1,6 +1,6 @@
 CC      := gcc
-CFLAGS  := -g -O3 -Wall -Wextra -std=c17 -Iinclude -MMD -MP -I/usr/include/freetype2
-LDFLAGS := -lglfw -lGL -lXrandr -lpthread -ldl -lm
+CFLAGS  := -g -O3 -Wall -Wextra -std=c17 -Iinclude -MMD -MP $(shell pkg-config --cflags freetype2)
+LDFLAGS := -lglfw -lGL -lXrandr -lpthread -ldl -lm $(shell pkg-config --libs freetype2)
 
 SRCDIR  := srcs
 BINDIR  := bins

@@ -14,6 +14,8 @@ int texture_load(const char* ptexturepath){
   struct Texture currTex;
   currTex.data = stbi_load(ptexturepath, &currTex.width, &currTex.height, &currTex.channelc, 0);
   if(!currTex.data){perror("failed to load texture");}
+  // ^   texture failure failure doesnt exit as intended
+
   glGenTextures(1, &currTex.gltexture);
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, currTex.gltexture);
@@ -22,9 +24,10 @@ int texture_load(const char* ptexturepath){
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+  
   GLenum format = (currTex.channelc == 4) ? GL_RGBA : GL_RGB;
   glTexImage2D(GL_TEXTURE_2D, 0, format, currTex.width, currTex.height, 0, format, GL_UNSIGNED_BYTE, currTex.data);
+  //   1-2 channel imgs are not supported and will get misread, therefore R|G will not be supported
 
   glGenerateMipmap(GL_TEXTURE_2D);
   stbi_image_free(currTex.data);

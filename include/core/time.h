@@ -4,4 +4,5 @@
 #include <GLFW/glfw3.h>
 double getTime();
 double updateTime();
+double getFPS();
 #endif

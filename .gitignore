@@ -2,3 +2,5 @@
 bins/
 core.*
 makefile.old
+lastcompile.txt
+TODO.md

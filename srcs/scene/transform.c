@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include "core/time.h"
 #include "graphics/camera.h"
+#include "graphics/mesh.h"
 #include "graphics/shader.h"
 #include <cglm/cam.h>
 #include <cglm/cglm.h>
@@ -11,10 +12,7 @@
 #include <cglm/util.h>
 #include <cglm/vec3.h>
 #include <cglm/vec3-ext.h>
-typedef struct{
-  mat4 model, view, projection;
-  vec3 normalized_x, normalized_y, normalized_z;
-} Views;
+#include <scene/transform.h>
 typedef struct{
   vec3 pos;
   versor quat;
@@ -36,9 +34,6 @@ void transform_init() {
   glm_vec3_copy((vec3){0.0f, 0.0f,  0.0f}, cube.pos);
 }
 void transform(const struct Shader *shader) {
-  glm_quat_mat4(cube.quat, coordsystem.model); // ijk vec -> float[4][4]
-  glm_translate(coordsystem.model, cube.pos); //translate model to align with pos, therefore moving model by pos
-  
   //rotation logic
   float dt = updateTime();
   float speed = 90.0f;
@@ -47,14 +42,16 @@ void transform(const struct Shader *shader) {
 
   glm_quatv(r, angle, (vec3){3.0f, 1.0f, 1.0f}); //creating some rotation vector on some axis, where vec3 of axis represents rotation axis
   glm_quat_mul(cube.quat, r, cube.quat); // apply rotation quat to cube quat
- glm_quat_normalize(cube.quat);
+  glm_quat_normalize(cube.quat);
 
-  glm_mat4_identity(coordsystem.model); // model space identity mat4
-  // glm_translate(coordsystem.model, cube.pos);   ???????
   mat4 rot;
   glm_quat_mat4(cube.quat, rot); 
+  glm_mat4_identity(coordsystem.model);
+  glm_translate(coordsystem.model, cube.pos);
   glm_mat4_mul(coordsystem.model, rot, coordsystem.model);
 
+
+  // aspect ratio will be changed as dynamic after realtime settings is implamented
   //                     fov                      aspect ratio                      maxZ to render          projection matrix
   glm_perspective(glm_rad(45.0f), 960.0f/540.0f, 0.1f, 100000.0f, coordsystem.projection);
   glm_mat4_copy(Ecamera.view, coordsystem.view);
@@ -69,9 +66,9 @@ void transform(const struct Shader *shader) {
   glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, (float *)coordsystem.projection);
 
 }
-void floor_draw(struct Shader *shader, int length, int width, float y, float spacing) {
+void floor_draw(struct Shader *shader, Mesh *mesh, int length, int width, float y, float spacing) {
   int modelLoc = glGetUniformLocation(shader->id, "model");
-
+  glBindVertexArray(mesh->vao);
   for(int x = 0; x < length; x++) {
     for(int z = 0; z < width; z++) {
         mat4 model;
@@ -82,4 +79,5 @@ void floor_draw(struct Shader *shader, int length, int width, float y, float spa
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
   }
+  glBindVertexArray(0);
 }

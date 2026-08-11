@@ -21,8 +21,8 @@ GLFWwindow *window_init(void) {
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
   printf("loading glad;");
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    return NULL;
     fprintf(stderr, "glad load failed");
+    return NULL;
   }
 
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);

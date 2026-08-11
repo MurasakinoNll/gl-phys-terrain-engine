@@ -21,15 +21,16 @@ struct Shader shader_init(const char *vshpath, const char *fshpath){
   glCompileShader(fragmentShader);
 
   //logging
-  char infoLog[1024];
+  char infoLogFrag[1024];
+  char infoLogVert[1024];
+  char infoLogProg[1024];
   int vshsuc, fshsuc;
   glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vshsuc);
   glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fshsuc);
   if(!vshsuc || !fshsuc){
-    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-  perror("failed shader compile");
-
+    glGetShaderInfoLog(vertexShader, 512, NULL, infoLogVert);
+    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLogFrag);
+    printf("error compiling vsh|fsh: %s \n \n %s \n", infoLogVert, infoLogFrag);
   }
 
   unsigned int shaderProgram;
@@ -40,8 +41,11 @@ struct Shader shader_init(const char *vshpath, const char *fshpath){
 
   //logging
   int success; glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-  if (!success){glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);perror("failed shader link");}
-  
+  if (!success){
+    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLogProg);
+    printf ("error in creating program: \n%s\n", infoLogProg);
+  }
+
   struct Shader shader;
   shader.id = shaderProgram;
   
